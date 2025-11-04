@@ -126,8 +126,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     # Publish on both releases and manual workflow runs
-    permissions:
-      contents: read  # Explicitly set permissions to prevent OIDC token access
 
     steps:
     - name: Download all wheels
@@ -135,20 +133,20 @@ jobs:
       with:
         pattern: wheels-*
         merge-multiple: true
-    
+
     - name: Prepare wheels for publishing
       run: |
         # Debug: Show what was downloaded
         echo "=== All files after artifact download ==="
         find . -type f | grep -E '\.(whl|zip)$' | sort
         echo "========================================="
-        
+
         # Create clean dist directory
         mkdir -p dist/
-        
+
         # Find all wheel files and move them to dist/
         find . -name "*.whl" -type f -exec mv {} dist/ \;
-        
+
         # Verify we have wheels, not zips
         echo "=== Wheels ready for publishing in dist/ ==="
         ls -la dist/
@@ -157,14 +155,18 @@ jobs:
           exit 1
         fi
         echo "==========================================="
-    
-    - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        user: __token__
-        password: ${{ secrets.PYPI_TOKEN }}
-        repository-url: https://upload.pypi.org/legacy/
-        packages-dir: dist/
-        skip-existing: true
-        verbose: true
-        attestations: false  # Disable attestations which require OIDC
+        python-version: '3.11'
+
+    - name: Install twine
+      run: pip install twine
+
+    - name: Publish to PyPI using twine
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+      run: |
+        twine upload --skip-existing --verbose dist/*.whl
