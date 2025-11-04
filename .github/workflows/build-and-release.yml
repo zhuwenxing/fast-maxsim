@@ -10,8 +10,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:     [ubuntu-22.04, macos-15-intel, macos-latest]   # macos-15-intel is Intel x86_64, macos-latest is ARM64 (currently macos-15)
-        python: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        # Temporary: single platform for quick publish verification
+        os:     [macos-latest]   # macos-latest is ARM64 (currently macos-15)
+        python: ["3.11"]
 
     runs-on: ${{ matrix.os }}
     env:
