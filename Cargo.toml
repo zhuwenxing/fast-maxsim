@@ -1,11 +1,11 @@
 [package]
-name = "maxsim-cpu"
+name = "maxsim-fast"
 version = "0.1.0"
 edition = "2021"
 build = "build.rs"
 
 [lib]
-name = "maxsim_cpu"
+name = "maxsim_fast"
 crate-type = ["cdylib"]
 
 [dependencies]

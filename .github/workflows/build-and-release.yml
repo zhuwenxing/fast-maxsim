@@ -96,17 +96,17 @@ jobs:
         
         # Test import and basic functionality
         python << 'EOF'
-        import maxsim_cpu
+        import maxsim_fast
         import numpy as np
-        print('MaxSim CPU imported successfully')
-        
+        print('MaxSim Fast imported successfully')
+
         # Basic functionality test
         q = np.random.randn(4, 128).astype(np.float32)
         q = q / np.linalg.norm(q, axis=1, keepdims=True)
         d = np.random.randn(2, 8, 128).astype(np.float32)
         d = d / np.linalg.norm(d, axis=2, keepdims=True)
-        
-        scores = maxsim_cpu.maxsim_scores(q, d)
+
+        scores = maxsim_fast.maxsim_scores(q, d)
         print(f'Test passed! Scores shape: {scores.shape}')
         assert scores.shape == (2,), f'Expected shape (2,), got {scores.shape}'
         EOF
