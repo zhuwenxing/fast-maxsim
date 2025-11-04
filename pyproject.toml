@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "maxsim-fast"
-version = "0.1.0"
+version = "0.1.1"
 description = "Fast CPU implementation of MaxSim scoring"
 requires-python = ">=3.8"
 dependencies = ["numpy>=1.20"]

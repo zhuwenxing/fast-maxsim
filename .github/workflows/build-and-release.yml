@@ -10,9 +10,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Temporary: single platform for quick publish verification
-        os:     [macos-latest]   # macos-latest is ARM64 (currently macos-15)
-        python: ["3.11"]
+        os:     [ubuntu-22.04, macos-15-intel, macos-latest]   # macos-15-intel is Intel x86_64, macos-latest is ARM64 (currently macos-15)
+        python: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
     runs-on: ${{ matrix.os }}
     env:
@@ -169,11 +168,4 @@ jobs:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
       run: |
-        echo "Token length: ${#TWINE_PASSWORD}"
-        if [ -z "$TWINE_PASSWORD" ]; then
-          echo "ERROR: PYPI_TOKEN secret is not set!"
-          exit 1
-        fi
-        # Debug: show first and last 4 chars of token
-        echo "Token preview: ${TWINE_PASSWORD:0:4}...${TWINE_PASSWORD: -4}"
         twine upload --skip-existing --verbose dist/*.whl
