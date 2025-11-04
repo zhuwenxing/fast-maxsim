@@ -3,8 +3,8 @@ requires = ["maturin>=1.0,<2.0"]
 build-backend = "maturin"
 
 [project]
-name = "maxsim-fast"
-version = "0.1.1"
+name = "fast-maxsim"
+version = "0.2.0"
 description = "Fast CPU implementation of MaxSim scoring"
 requires-python = ">=3.8"
 dependencies = ["numpy>=1.20"]
@@ -27,8 +27,10 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/zhuwenxing/maxsim-cpu"
-"Bug Tracker" = "https://github.com/zhuwenxing/maxsim-cpu/issues"
+"Homepage" = "https://github.com/zhuwenxing/fast-maxsim"
+"Bug Tracker" = "https://github.com/zhuwenxing/fast-maxsim/issues"
+"Source" = "https://github.com/zhuwenxing/fast-maxsim"
+"Original Project" = "https://github.com/mixedbread-ai/maxsim-cpu"
 
 [tool.maturin]
 features = ["pyo3/extension-module"]

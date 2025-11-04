@@ -724,7 +724,7 @@ mod libxsmm {
 
 // from here onwards, we're back in the safety of python land.
 #[pymodule]
-fn maxsim_fast(_py: Python, m: &PyModule) -> PyResult<()> {
+fn fast_maxsim(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(maxsim_scores, m)?)?;
     m.add_function(wrap_pyfunction!(maxsim_scores_variable, m)?)?;
     Ok(())
