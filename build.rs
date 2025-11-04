@@ -26,10 +26,10 @@ fn main() {
         
         // Add library search path
         println!("cargo:rustc-link-search=native={}/lib", libxsmm_path.display());
-        
+
         // Force static linking of libxsmm
         println!("cargo:rustc-link-lib=static=xsmm");
-        println!("cargo:rustc-link-lib=static=xsmmext");
+        // Note: xsmmext may not exist in newer libxsmm versions, all functionality is in libxsmm.a
         // Don't use xsmmnoblas - we want the BLAS version!
         
         // Link against BLAS (OpenBLAS or system BLAS)
