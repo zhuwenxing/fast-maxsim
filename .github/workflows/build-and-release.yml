@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:     [ubuntu-22.04, macos-latest]   # macos-latest is ARM64 (currently macos-15)
+        os:     [ubuntu-22.04, macos-15-intel, macos-latest]   # macos-15-intel is Intel x86_64, macos-latest is ARM64 (currently macos-15)
         python: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
     runs-on: ${{ matrix.os }}
@@ -57,7 +57,7 @@ jobs:
     # 6. Build the wheel
     - name: Build wheel with maturin
       env:
-        RUSTFLAGS: ${{ runner.os == 'Linux' && '-L native=/tmp/libxsmm/lib' || '' }}
+        RUSTFLAGS: ${{ runner.os == 'Linux' && '-L native=/tmp/libxsmm/lib' || (matrix.os == 'macos-15-intel' && '-C target-cpu=haswell' || '') }}
       run: |
         if [ "$RUNNER_OS" = "Linux" ]; then
           maturin build --release \
