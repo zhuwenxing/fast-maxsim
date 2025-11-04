@@ -39,6 +39,11 @@ jobs:
         make -C /tmp/libxsmm STATIC=1
         echo "LIBXSMM_DIR=/tmp/libxsmm" >> $GITHUB_ENV
 
+        # Debug: List built libraries
+        echo "=== Libraries built by libxsmm ==="
+        ls -la /tmp/libxsmm/lib/
+        echo "=================================="
+
     # 4. Toolchains
     - uses: dtolnay/rust-toolchain@stable
     - uses: actions/setup-python@v5

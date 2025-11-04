@@ -25,11 +25,17 @@ fn main() {
         let libxsmm_path = PathBuf::from(libxsmm_dir);
         
         // Add library search path
-        println!("cargo:rustc-link-search=native={}/lib", libxsmm_path.display());
+        let lib_path = libxsmm_path.join("lib");
+        println!("cargo:rustc-link-search=native={}", lib_path.display());
 
         // Force static linking of libxsmm
         println!("cargo:rustc-link-lib=static=xsmm");
-        // Note: xsmmext may not exist in newer libxsmm versions, all functionality is in libxsmm.a
+
+        // Conditionally link libxsmmext if it exists (provides OpenMP functionality)
+        // Note: newer versions of libxsmm may have merged xsmmext into the main library
+        if lib_path.join("libxsmmext.a").exists() || lib_path.join("libxsmmext.lib").exists() {
+            println!("cargo:rustc-link-lib=static=xsmmext");
+        }
         // Don't use xsmmnoblas - we want the BLAS version!
         
         // Link against BLAS (OpenBLAS or system BLAS)
